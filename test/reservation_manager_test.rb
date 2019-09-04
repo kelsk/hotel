@@ -1,21 +1,32 @@
 require_relative 'test_helper'
 
 describe "Reservation Manager" do
+  
+  before do
+    @hotel = Hotel::ReservationManager.new
+  end
+  
+  
   it "creates an instance of Reservation Manager" do
-    res_manager = Hotel::ReservationManager.new("rooms", "reservations")
-    
-    expect(res_manager).must_be_instance_of Hotel::ReservationManager
-    
+    expect(@hotel).must_be_instance_of Hotel::ReservationManager
   end
   
   it "returns a list of all the rooms" do
-    new_hotel = Hotel::ReservationManager.new("rooms", "reservations")
-    
-    room_ids = new_hotel.rooms.map do |room|
-      room.room_id
-    end
-    
-    puts room_ids
+    expect(@hotel.rooms.length).must_equal 20
   end
+  
+  it "creates a new reservation" do
+    @hotel.create_reservation("08-01-19", "12-01-19")
+    
+    expect(@hotel.reservations.length).must_equal 1
+  end
+  
+  it "returns a list of available rooms" do
+    new_reservation = @hotel.create_reservation('2019-10-01', '2019-10-11')
+    available_rooms = @hotel.find_available_rooms('2019-10-03', '2019-10-11')
+    
+    expect(available_rooms.length).must_equal 20
+  end
+  
   
 end
