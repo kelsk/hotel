@@ -24,6 +24,14 @@ module Hotel
       @room_id = rooms.first.id
     end
     
+    def calculate_total_cost
+      rooms = Hotel::Room.load_all
+      room = rooms.find do |room|
+        room.id == @room_id
+      end
+      room.rate * @dates.length
+    end
+    
   end
   
 end

@@ -12,7 +12,6 @@ describe "Reservation" do
   
   
   it "includes all dates between checkin and checkout in a reservation" do
-    
     # expect that reservation.dates returns an array
     expect(@reservation.dates).must_be_instance_of Array
     # with all the dates between the start date and the end date    
@@ -21,15 +20,15 @@ describe "Reservation" do
   end
   
   it "adds a Room to a Reservation" do
-    puts @reservation.get_a_room
-    puts @reservation.room_id
     # expect that reservation.room_id will equal 1, for wave 1
+    expect(@reservation.room_id).must_equal 1
     # expect that reservation.room_id will be the first available room, for wave 2
   end
   
   it "calculates the total cost for a Reservation" do
     # expect that the cost is equal to the date range times the room's base rate (200)
     # reservation from 10/31-11/04 is 4 nights at 200 = $800
+    expect(@reservation.calculate_total_cost).must_equal 800
   end
   
   # moved below code to Calendar
