@@ -2,10 +2,22 @@ module Hotel
   
   class Room
     
-    attr_reader :room_id
+    TOTAL_ROOMS = 20
+    BASE_RATE = 200
     
-    def initialize(room_id)
-      @room_id = room_id
+    attr_reader :id
+    
+    def initialize(id)
+      @id = id
+      @rate = BASE_RATE
+    end
+    
+    def self.load_all
+      rooms = []
+      TOTAL_ROOMS.times do |i| 
+        rooms << new(i)
+      end
+      return rooms
     end
     
   end
