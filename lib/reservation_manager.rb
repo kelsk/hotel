@@ -11,7 +11,7 @@ module Hotel
     end
     
     def create_reservation(start_date, end_date)
-      new_reservation = Hotel::Reservation.new(start_date, end_date, 13)
+      new_reservation = Hotel::Reservation.new(start_date, end_date)
       @reservations << new_reservation
     end
     

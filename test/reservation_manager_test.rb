@@ -16,9 +16,17 @@ describe "Reservation Manager" do
   end
   
   it "creates a new reservation" do
-    @hotel.create_reservation('2019-10-31', "2019-11-04")
+    @hotel.create_reservation('2019-10-31', '2019-11-04')
     
     expect(@hotel.reservations.length).must_equal 1
+  end
+  
+  it "creates a reservation for a given date range" do
+    @hotel.create_reservation('2019-10-31', '2019-11-04')
+    new_reservation = @hotel.reservations[0]
+
+    expect(new_reservation.start_date.to_s).must_equal '2019-10-31'
+    expect(new_reservation.end_date.to_s).must_equal '2019-11-04'
   end
   
   it "returns a list of available rooms" do
@@ -31,8 +39,8 @@ describe "Reservation Manager" do
   
   it "returns a list of reservations for a given date" do
     # expect reservation_manager.list_reservations_by_date(whatever date)
-      # will return the reservations whose @dates includes whatever date
+    # will return the reservations whose @dates includes whatever date
   end
-
+  
   
 end

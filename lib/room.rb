@@ -15,7 +15,7 @@ module Hotel
     def self.load_all
       rooms = []
       TOTAL_ROOMS.times do |i| 
-        rooms << new(i)
+        rooms << new(i+1)
       end
       return rooms
     end
