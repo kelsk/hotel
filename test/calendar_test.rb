@@ -28,6 +28,7 @@ describe "Calendar" do
     end_date = Date.parse('2019-11-04')
     
     expect(@calendar.get_date_range(start_date, end_date)).must_be_instance_of Array
+    expect(@calendar.get_date_range(start_date, end_date)[1].to_s).must_equal '2019-11-01'
   end
   
 end
