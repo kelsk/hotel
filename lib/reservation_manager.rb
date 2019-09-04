@@ -19,7 +19,6 @@ module Hotel
       @rooms.map do |room|
         room
       end
-      
     end
     
   end

@@ -16,7 +16,7 @@ describe "Reservation Manager" do
   end
   
   it "creates a new reservation" do
-    @hotel.create_reservation("08-01-19", "12-01-19")
+    @hotel.create_reservation('2019-10-31', "2019-11-04")
     
     expect(@hotel.reservations.length).must_equal 1
   end

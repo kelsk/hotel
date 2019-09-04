@@ -12,7 +12,7 @@ describe "Calendar" do
   
   it "raises an exception a start date is earlier than today" do
     date = Date.parse('2019-09-03')
-
+    
     expect{@calendar.get_date_range(date)}.must_raise ArgumentError 
   end
   

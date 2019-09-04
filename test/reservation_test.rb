@@ -10,9 +10,11 @@ describe "Reservation" do
     expect(@reservation).must_be_kind_of Hotel::Reservation
   end
   
-  it "checks whether start_date is a valid date" do
-    expect(@reservation.start_date).must_be_instance_of Date
-  end
+  
+  # moved below code to Calendar
+  # it "checks whether start_date is a valid date" do
+  #   expect(@reservation.start_date).must_be_instance_of Date
+  # end
   
   
 end
