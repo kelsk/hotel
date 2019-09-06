@@ -22,7 +22,7 @@ module Hotel
     
     def overlap?(dates_to_check, reserved_dates)
       reserved_dates.flatten!
-      (reserved_dates & dates_to_check).any?
+      (reserved_dates & dates_to_check).any? # if true, then there is overlap.
       # dates_to_check.each do |date|
       #   if reserved_dates.include? date
       #     return true

@@ -11,12 +11,12 @@ describe "Reservation Manager" do
     end
     
     @test_reservations = [
-      Hotel::Reservation.new(Date.parse('2019-10-31'), Date.parse('2019-11-04'), @test_rooms[1]), #index 0
-      Hotel::Reservation.new(Date.parse('2019-10-29'), Date.parse('2019-10-31'), @test_rooms[2]), #index 1
-      Hotel::Reservation.new(Date.parse('2019-10-28'), Date.parse('2019-10-31'), @test_rooms[3]), #index 2
-      Hotel::Reservation.new(Date.parse('2019-11-01'), Date.parse('2019-11-03'), @test_rooms[4]), #index 3
-      Hotel::Reservation.new(Date.parse('2019-11-01'), Date.parse('2019-11-05'), @test_rooms[5]), #index 4
-      Hotel::Reservation.new(Date.parse('2019-10-25'), Date.parse('2019-11-05'), @test_rooms[6]) #index 5
+      Hotel::Reservation.new(Date.parse('2019-10-31'), Date.parse('2019-11-04'), @test_rooms[0]), #index 0
+      Hotel::Reservation.new(Date.parse('2019-10-29'), Date.parse('2019-10-31'), @test_rooms[1]), #index 1
+      Hotel::Reservation.new(Date.parse('2019-10-28'), Date.parse('2019-10-31'), @test_rooms[2]), #index 2
+      Hotel::Reservation.new(Date.parse('2019-11-01'), Date.parse('2019-11-03'), @test_rooms[3]), #index 3
+      Hotel::Reservation.new(Date.parse('2019-11-01'), Date.parse('2019-11-05'), @test_rooms[4]), #index 4
+      Hotel::Reservation.new(Date.parse('2019-10-25'), Date.parse('2019-11-05'), @test_rooms[5]) #index 5
     ]
     
     @hotel = Hotel::ReservationManager.new(rooms: @test_rooms, reservations: @test_reservations)
@@ -52,13 +52,6 @@ describe "Reservation Manager" do
     # expect(available_rooms.length).must_equal 20
     
     # wave 2: only some rooms are available, must_equal 20 is no longer valid
-    puts @hotel.rooms.length
-    puts available_rooms.length
-    available_rooms.each do |room|
-      puts room[0].id
-    end
-    puts @hotel.reservations.length
-    
     expect(available_rooms.length).must_equal 17
   end
   
@@ -71,6 +64,16 @@ describe "Reservation Manager" do
     expect(reservations_by_date).must_be_instance_of Array
     expect(reservations_by_date[0].start_date.to_s).must_equal '2019-10-31'
     expect(reservations_by_date[1].start_date.to_s).must_equal '2019-10-29'
+  end
+  
+  it "raises an exception if there are no rooms available for a date range" do
+    
+    # adds conflicting reservations
+    14.times do |i|
+      @test_reservations << Hotel::Reservation.new(Date.parse('2019-10-31'), Date.parse('2019-11-04'), @test_rooms[i + 6])
+    end
+    
+    expect{ @hotel.create_reservation(Date.parse('2019-10-22'), Date.parse('2019-11-05')) }.must_raise ArgumentError
   end
   
   
