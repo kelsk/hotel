@@ -3,15 +3,24 @@ require_relative 'test_helper'
 describe "Reservation Manager" do
   
   before do
-    @hotel = Hotel::ReservationManager.new
-    
     # staging for Wave 2 tests
-    @hotel.create_reservation(Date.parse('2019-10-31'), Date.parse('2019-11-04')) #index 0
-    @hotel.create_reservation(Date.parse('2019-10-29'), Date.parse('2019-10-31')) #index 1
-    @hotel.create_reservation(Date.parse('2019-10-28'), Date.parse('2019-10-31')) #index 2
-    @hotel.create_reservation(Date.parse('2019-11-01'), Date.parse('2019-11-03')) #index 3
-    @hotel.create_reservation(Date.parse('2019-11-01'), Date.parse('2019-11-05')) #index 4
-    @hotel.create_reservation(Date.parse('2019-10-25'), Date.parse('2019-11-05')) #index 5
+    @test_rooms = []
+    
+    20.times do |i|
+      @test_rooms << Hotel::Room.new(i+1)
+    end
+    
+    @test_reservations = [
+      Hotel::Reservation.new(Date.parse('2019-10-31'), Date.parse('2019-11-04'), @test_rooms[1]), #index 0
+      Hotel::Reservation.new(Date.parse('2019-10-29'), Date.parse('2019-10-31'), @test_rooms[2]), #index 1
+      Hotel::Reservation.new(Date.parse('2019-10-28'), Date.parse('2019-10-31'), @test_rooms[3]), #index 2
+      Hotel::Reservation.new(Date.parse('2019-11-01'), Date.parse('2019-11-03'), @test_rooms[4]), #index 3
+      Hotel::Reservation.new(Date.parse('2019-11-01'), Date.parse('2019-11-05'), @test_rooms[5]), #index 4
+      Hotel::Reservation.new(Date.parse('2019-10-25'), Date.parse('2019-11-05'), @test_rooms[6]) #index 5
+    ]
+    
+    @hotel = Hotel::ReservationManager.new(rooms: @test_rooms, reservations: @test_reservations)
+    
     
   end
   
@@ -43,15 +52,14 @@ describe "Reservation Manager" do
     # expect(available_rooms.length).must_equal 20
     
     # wave 2: only some rooms are available, must_equal 20 is no longer valid
-    available_rooms.each do |room|
-      puts room
-    end
     puts @hotel.rooms.length
     puts available_rooms.length
-    puts available_rooms
+    available_rooms.each do |room|
+      puts room[0].id
+    end
     puts @hotel.reservations.length
     
-    expect(available_rooms.length).must_equal 16
+    expect(available_rooms.length).must_equal 17
   end
   
   it "returns a list of reservations for a given date" do

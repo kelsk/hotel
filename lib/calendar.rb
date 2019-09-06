@@ -20,6 +20,18 @@ module Hotel
       start_date < end_date ? true : false
     end
     
+    def overlap?(dates_to_check, reserved_dates)
+      reserved_dates.flatten!
+      (reserved_dates & dates_to_check).any?
+      # dates_to_check.each do |date|
+      #   if reserved_dates.include? date
+      #     return true
+      #   else
+      #     return false
+      #   end
+      # end
+    end
+    
     def get_date_range(start_date, end_date)
       if !valid_start_date?(start_date)
         raise ArgumentError, 'Start date cannot be current date.'
@@ -30,5 +42,6 @@ module Hotel
         (start_date...end_date).to_a
       end
     end
+    
   end  
 end
