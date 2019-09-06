@@ -6,12 +6,12 @@ describe "Reservation Manager" do
     @hotel = Hotel::ReservationManager.new
     
     # staging for Wave 2 tests
-    @hotel.create_reservation('2019-10-31', '2019-11-04') #index 0
-    @hotel.create_reservation('2019-10-29', '2019-10-31') #index 1
-    @hotel.create_reservation('2019-10-28', '2019-10-31') #index 2
-    @hotel.create_reservation('2019-11-01', '2019-11-03') #index 3
-    @hotel.create_reservation('2019-11-01', '2019-11-05') #index 4
-    @hotel.create_reservation('2019-10-25', '2019-11-05') #index 5
+    @hotel.create_reservation(Date.parse('2019-10-31'), Date.parse('2019-11-04')) #index 0
+    @hotel.create_reservation(Date.parse('2019-10-29'), Date.parse('2019-10-31')) #index 1
+    @hotel.create_reservation(Date.parse('2019-10-28'), Date.parse('2019-10-31')) #index 2
+    @hotel.create_reservation(Date.parse('2019-11-01'), Date.parse('2019-11-03')) #index 3
+    @hotel.create_reservation(Date.parse('2019-11-01'), Date.parse('2019-11-05')) #index 4
+    @hotel.create_reservation(Date.parse('2019-10-25'), Date.parse('2019-11-05')) #index 5
     
   end
   
@@ -38,17 +38,27 @@ describe "Reservation Manager" do
   it "returns a list of available rooms" do
     new_reservation = @hotel.reservations[2]
     expect(new_reservation.start_date.to_s).must_equal '2019-10-28'
-    available_rooms = @hotel.find_available_rooms('2019-10-28', '2019-10-31')
+    available_rooms = @hotel.find_available_rooms(Date.parse('2019-10-28'), Date.parse('2019-10-31'))
     # wave 1: all rooms are available
+    # expect(available_rooms.length).must_equal 20
+    
     # wave 2: only some rooms are available, must_equal 20 is no longer valid
-    expect(available_rooms.length).must_equal 20
+    available_rooms.each do |room|
+      puts room
+    end
+    puts @hotel.rooms.length
+    puts available_rooms.length
+    puts available_rooms
+    puts @hotel.reservations.length
+    
+    expect(available_rooms.length).must_equal 16
   end
   
   it "returns a list of reservations for a given date" do
     # expect reservation_manager.list_reservations_by_date(whatever date)
     # will return the reservations whose @dates includes whatever date
     
-    reservations_by_date = @hotel.list_reservations_by_date('2019-10-31')
+    reservations_by_date = @hotel.list_reservations_by_date(Date.parse('2019-10-31'))
     
     expect(reservations_by_date).must_be_instance_of Array
     expect(reservations_by_date[0].start_date.to_s).must_equal '2019-10-31'

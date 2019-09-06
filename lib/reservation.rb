@@ -1,16 +1,17 @@
 require_relative 'calendar'
-
+require_relative 'reservation_manager'
 module Hotel
   
   class Reservation
     
     attr_reader :start_date, :end_date
-    attr_accessor :room_id, :dates
+    attr_accessor :room, :room_id, :dates
     
-    def initialize(start_date, end_date)
-      @start_date = Date.parse(start_date)
-      @end_date = Date.parse(end_date)
-      @room_id = get_a_room
+    def initialize(start_date, end_date, room)
+      @start_date = start_date
+      @end_date = end_date
+      @room = room
+      @room_id = @room.id
       @dates = get_all_dates
     end
     
@@ -19,17 +20,12 @@ module Hotel
       cal.get_date_range(@start_date, @end_date)
     end
     
-    def get_a_room
-      rooms = Hotel::ReservationManager.new.rooms
-      @room_id = rooms.first.id
-    end
+    # def get_a_room
+    #   @room = manager.find_available_rooms(@start_date, @end_date).first      
+    # end
     
     def calculate_total_cost
-      rooms = Hotel::Room.load_all
-      room = rooms.find do |room|
-        room.id == @room_id
-      end
-      room.rate * @dates.length
+      @room.rate * @dates.length
     end
     
   end

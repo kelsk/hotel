@@ -3,7 +3,8 @@ require_relative 'test_helper'
 describe "Reservation" do
   
   before do
-    @reservation = Hotel::Reservation.new('2019-10-31', '2019-11-04')
+    @manager = Hotel::ReservationManager.new
+    @reservation = @manager.create_reservation(Date.parse('2019-10-31'), Date.parse('2019-11-04'))[0]
   end
   
   it "initializes a Reservation" do    
@@ -21,7 +22,7 @@ describe "Reservation" do
   
   it "adds a Room to a Reservation" do
     # expect that reservation.room_id will equal 1, for wave 1
-    expect(@reservation.room_id).must_equal 1
+    expect(@reservation.room).must_be_instance_of Hotel::Room
     # expect that reservation.room_id will be the first available room, for wave 2
   end
   
