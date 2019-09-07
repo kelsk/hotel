@@ -36,11 +36,13 @@ module Hotel
           available_rooms_by_id = available_rooms_by_id - [reservation.room.id]
         end
       end
-      
-      available_rooms = available_rooms_by_id.map do |id| 
-        get_rooms_by_id(id)
+      if available_rooms_by_id[0] == nil
+        return [nil]
+      else
+        available_rooms = available_rooms_by_id.map do |id|
+          get_rooms_by_id(id)
+        end
       end
-      
     end
     
     def get_rooms_by_id(id)

@@ -5,7 +5,8 @@ module Hotel
     TOTAL_ROOMS = 20
     BASE_RATE = 200
     
-    attr_reader :id, :rate
+    attr_reader :id
+    attr_accessor :rate
     
     def initialize(id)
       @id = id
