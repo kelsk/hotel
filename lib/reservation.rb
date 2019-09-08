@@ -6,14 +6,15 @@ module Hotel
   class Reservation
     
     attr_reader :start_date, :end_date
-    attr_accessor :id, :room, :dates
+    attr_accessor :id, :room, :dates, :discount
     
-    def initialize(start_date, end_date, room)
+    def initialize(start_date, end_date, room, discount: 0)
       @start_date = start_date
       @end_date = end_date
       @room = room
       @id = create_id
       @dates = get_all_dates
+      @discount = discount
     end
     
     def create_id
@@ -25,7 +26,8 @@ module Hotel
     end
     
     def calculate_total_cost
-      @room.rate * @dates.length
+      rate = @discount == 0 ? @room.rate : @room.rate * @discount
+      rate * @dates.length
     end
     
   end

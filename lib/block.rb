@@ -5,7 +5,7 @@ module Hotel
     attr_reader :start_date, :end_date
     attr_accessor :id, :rooms, :dates, :discount, :reserved_rooms, :reservations
     
-    def initialize(start_date, end_date, room, discount: 0.80)
+    def initialize(start_date, end_date, room, discount: 0.8)
       super(start_date, end_date, room)
       @id = create_block_id
       @rooms = room
@@ -19,19 +19,18 @@ module Hotel
     end
     
     def add_reservation_to_block(reservation)
-      puts @rooms.length
-      reservation.room = @rooms.first
       @reserved_rooms << reservation.room
+      @reservations << reservation
       @rooms.delete reservation.room
-      puts @rooms.length
     end
     
-    def list_discounted_rates
-      @rooms.map! do |room|
-        room.rate = room.rate * @discount
+    def calculate_total_cost
+      total_cost = @reservations.map do |reservation|
+        @room = reservation.room
+        super 
       end
+      total_cost.sum
     end
-    
     
   end
 end

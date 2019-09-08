@@ -39,7 +39,7 @@ describe "Reservation Manager" do
   end
   
   it "creates a new reservation" do
-    expect(@hotel.request_reservation(Date.parse('2019-10-01'), Date.parse('2019-10-05'))).must_be_instance_of Hotel::Reservation
+    expect(@hotel.create_reservation(Date.parse('2019-10-01'), Date.parse('2019-10-05'), @test_rooms[6])).must_be_instance_of Hotel::Reservation
   end
   
   it "creates a reservation for a given date range" do
