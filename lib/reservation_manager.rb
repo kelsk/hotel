@@ -3,22 +3,38 @@ require_relative 'room'
 module Hotel
   class ReservationManager
     
-    attr_accessor :rooms, :reservations
+    attr_accessor :rooms, :reservations, :blocks
     
-    def initialize(rooms: Hotel::Room.load_all, reservations: [], calendar: Hotel::Calendar.new)
+    def initialize(rooms: Hotel::Room.load_all, reservations: [], blocks: [], calendar: Hotel::Calendar.new)
       @rooms = rooms
       @reservations = reservations
+      @blocks = blocks
       @calendar = calendar
     end
     
-    def request_reservation(start_date, end_date)
-      # returns the first available room
-      room = find_available_rooms(start_date, end_date).first
-      if room != nil
-        create_reservation(start_date, end_date, room)
-      else
-        raise ArgumentError, "There are no rooms available for those dates."
+    def request_reservation(start_date, end_date, type: :room, amount: 1)
+      available_rooms = find_available_rooms(start_date, end_date)
+      if type == :block 
+        if amount > 5
+          raise ArgumentError, "You may only reserve up to 5 rooms."
+        elsif available_rooms.length < amount
+          raise ArgumentError, "There are not enough available rooms for those dates."
+        else 
+          create_block(start_date, end_date, available_rooms[0...amount])
+        end
+      elsif type == :room
+        if available_rooms.first != nil
+          create_reservation(start_date, end_date, available_rooms.first)
+        else
+          raise ArgumentError, "There are no rooms available for those dates."
+        end
       end
+    end
+    
+    def create_block(start_date, end_date, room)
+      block = Hotel::Block.new(start_date, end_date, room)
+      @blocks << block
+      return block
     end
     
     def create_reservation(start_date, end_date, room)
