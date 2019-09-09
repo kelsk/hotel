@@ -14,11 +14,15 @@ module Hotel
     
     def request_reservation(start_date, end_date, type: :room, block_id: nil, amount: 1)
       block_ids = @blocks.map {|block| block.id}
-      if block_ids.include? block_id
-        if type == :block
-          raise ArgumentError, "You may not reserve a block within a block."
+      if block_id
+        if block_ids.include? block_id
+          if type == :block
+            raise ArgumentError, "You may not reserve a block within a block."
+          else
+            reserve_in_block(start_date, end_date, block_id)
+          end
         else
-          reserve_in_block(start_date, end_date, block_id)
+          raise ArgumentError, "That block does not exist."
         end
       else
         available_rooms = find_available_rooms(start_date, end_date)
@@ -53,10 +57,8 @@ module Hotel
     end
     
     def reserve_in_block(start_date, end_date, id)
-      block_to_reserve = nil
-      @blocks.find do |block| 
+      block_to_reserve = @blocks.find do |block| 
         block.id == id
-        block_to_reserve = block
       end
       if start_date == block_to_reserve.start_date && end_date == block_to_reserve.end_date
         room_to_reserve = find_available_rooms(start_date, end_date, rooms: block_to_reserve.rooms).first
@@ -84,7 +86,7 @@ module Hotel
       if available_rooms_by_id[0] == nil
         return [nil]
       else
-        available_rooms = available_rooms_by_id.map do |id|
+        available_rooms_by_id.map do |id|
           get_rooms_by_id(id)
         end
       end

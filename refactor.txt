@@ -1,0 +1,15 @@
+NOTES
+
+REFACTORS: 
+
+Removed Date.parse dates scattered throughout code. Made Date objects for tests. My code assumes that all dates entered into the program will be instances of Date.
+
+Reservation 16: originally had a variable to hold Room Rate, removed in favor of retrieving the rate from the instance of Room
+
+Went back and added ids to Reservations and Blocks.
+
+Res_Man 43: added if/else statement to be less expensive and not call "get_rooms_by_id" if there are no rooms.
+
+Moved "discount" from Block to Reservations class.
+
+Removed "list_discounted_rates" from Block, revamped "calculate_total_cost" instead.

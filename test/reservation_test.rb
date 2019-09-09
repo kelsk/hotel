@@ -1,5 +1,3 @@
-require_relative 'test_helper'
-
 describe "Reservation" do
   
   before do

@@ -1,10 +1,6 @@
-require_relative 'test_helper'
-
 describe "Reservation Manager" do
   
   before do
-    
-    # staging for Wave 2 tests
     
     @test_rooms = []
     

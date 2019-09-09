@@ -59,10 +59,14 @@ describe "Block" do
   end
   
   it "reserves a room in a Block" do
-    reservation = @hotel.request_reservation(Date.parse('2019-10-31'), Date.parse('2019-11-04'), type: :room, block_id: @block.id)
+    @hotel.request_reservation(Date.parse('2019-10-31'), Date.parse('2019-11-04'), type: :room, block_id: @block.id)
     
     expect(@block.reserved_rooms.length).must_equal 1
     expect(@block.rooms.length).must_equal 4
+  end
+  
+  it "raises an exception if a reservation is made for a Block that doesn't exist" do
+    expect { @hotel.request_reservation(Date.parse('2019-10-31'), Date.parse('2019-11-04'), type: :room, block_id: 'notablock') }.must_raise ArgumentError
   end
   
   it "returns a list of available rooms in a Block" do
@@ -70,7 +74,7 @@ describe "Block" do
     expect(available_rooms.length).must_equal 5
     
     # returns only 4 available rooms after a reservation is made
-    reservation = @hotel.request_reservation(Date.parse('2019-10-31'), Date.parse('2019-11-04'), type: :room, block_id: @block.id)
+    @hotel.request_reservation(Date.parse('2019-10-31'), Date.parse('2019-11-04'), type: :room, block_id: @block.id)
     available_rooms = @hotel.find_available_rooms(Date.parse('2019-10-28'), Date.parse('2019-10-31'), rooms: @block.rooms)
     expect(available_rooms.length).must_equal 4
   end
