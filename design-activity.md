@@ -33,3 +33,21 @@ Consider the Order#total_price method. In each implementation:
 
 Bonus question once you've read Metz ch. 3: Which implementation is more loosely coupled?
 Implementation B.
+
+
+ACTIVITY
+
+(Note: I used "refactors.txt" incorrectly by writing the refactors I did while doing my project instead of potential refactors to come back to.)
+
+I believe my code follows the single responsibility principle fairly well. Other than in creating an instance of a class, none of my classes modify the instance variables of another class. My classes for Room, Calendar, Block, and Reservation are all loosely coupled. My Reservation_Manager class is quite stuffed and may have more than one responsibility: creating reservations *and* returning information about reservations and rooms.
+
+Two situations that I think could stand to use a separate class are 1) the method `calculate_total_cost` in both Block and Reservation could be its own class for computing the price, and 2) the helper methods in Reservation_Manager for retrieving information (i.e. `get_rooms_by_id`, `list_reservations_by_date`) could be in a separate class that's strictly for reading information and not manipulating information.
+
+I'm going to choose #2 from above and create two separate classes out of the Reservation_Manager: one to hold the helper methods that retrieve information about the rooms and reservations in the hotel, and one to hold the methods to create reservations. (I'll hopefully refactor the methods themselves along the way.)
+
+The current Reservation_Manager class will hold the informational methods, and the new class Reservation_Creator will hold the actionable methods.
+
+Reservation_Creator will be a child of Reservation_Manager, since it will utilize the same instance variables.
+
+I hope to copy/paste the majority of the code, and then refactor once the new class is functioning and passing all the tests.
+
