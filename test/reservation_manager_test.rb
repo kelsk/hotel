@@ -34,16 +34,16 @@ describe "Reservation Manager" do
     expect(@hotel.rooms.length).must_equal 20
   end
   
-  it "creates a new reservation" do
-    expect(@hotel.create_reservation(Date.parse('2019-10-01'), Date.parse('2019-10-05'), @test_rooms[6])).must_be_instance_of Hotel::Reservation
-  end
+  # it "creates a new reservation" do
+  #   expect(@hotel.create_reservation(Date.parse('2019-10-01'), Date.parse('2019-10-05'), @test_rooms[6])).must_be_instance_of Hotel::Reservation
+  # end
   
-  it "creates a reservation for a given date range" do
-    new_reservation = @hotel.reservations[0]
+  # it "creates a reservation for a given date range" do
+  #   new_reservation = @hotel.reservations[0]
     
-    expect(new_reservation.start_date.to_s).must_equal '2019-10-31'
-    expect(new_reservation.end_date.to_s).must_equal '2019-11-04'
-  end
+  #   expect(new_reservation.start_date.to_s).must_equal '2019-10-31'
+  #   expect(new_reservation.end_date.to_s).must_equal '2019-11-04'
+  # end
   
   it "returns a list of available rooms" do
     available_rooms = @hotel.find_available_rooms(Date.parse('2019-10-28'), Date.parse('2019-10-31'))
@@ -59,15 +59,6 @@ describe "Reservation Manager" do
     expect(reservations_by_date[0].start_date.to_s).must_equal '2019-10-31'
   end
   
-  it "raises an exception if there are no rooms available for a date range" do
-    
-    # adds conflicting reservations to test data
-    14.times do |i|
-      @test_reservations << Hotel::Reservation.new(Date.parse('2019-10-31'), Date.parse('2019-11-04'), @test_rooms[i + 6])
-    end
-    
-    expect{ @hotel.request_reservation(Date.parse('2019-10-22'), Date.parse('2019-11-05')) }.must_raise ArgumentError
-  end
   
   
 end
