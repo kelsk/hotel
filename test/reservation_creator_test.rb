@@ -22,14 +22,13 @@ describe "Reservation Creator \n***\n***\n***\n***\n***\n***\n***\n***\n***" do
     expect(new_reservation.end_date.to_s).must_equal '2019-10-05'
   end
   
+  
   it "raises an exception if there are no rooms available for a date range" do
+    20.times do 
+      @reservation_creator.request_reservation(Date.parse('2019-10-31'), Date.parse('2019-11-04'))
+    end    
     
-    # adds conflicting reservations to test data
-    14.times do |i|
-      @test_reservations << Hotel::Reservation.new(Date.parse('2019-10-31'), Date.parse('2019-11-04'), @test_rooms[i + 6])
-    end
-    
-    expect{ @reservation_creator.request_reservation(Date.parse('2019-10-22'), Date.parse('2019-11-05')) }.must_raise ArgumentError
+    expect{ @reservation_creator.request_reservation(Date.parse('2019-10-31'), Date.parse('2019-11-04')) }.must_raise ArgumentError
   end
   
   
