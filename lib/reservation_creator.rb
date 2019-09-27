@@ -25,8 +25,8 @@ module Hotel
     
     
     def request_reservation(start_date, end_date, type: :room, block_id: nil, amount: 1)
-      block_ids = @reservation_manager.blocks.map {|block| block.id}
       if block_id
+      block_ids = @reservation_manager.blocks.map {|block| block.id}
         if block_ids.include? block_id
           if type == :block
             raise ArgumentError, "You may not reserve a block within a block."
@@ -77,5 +77,5 @@ module Hotel
     
   end
   
-  
+
 end

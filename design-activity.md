@@ -51,3 +51,8 @@ Reservation_Creator will be a child of Reservation_Manager, since it will utiliz
 
 I hope to copy/paste the majority of the code, and then refactor once the new class is functioning and passing all the tests.
 
+---
+
+About halfway into refactoring I deduced that this choice to separate the methods in "Reservation_Manager" was extremely unnecessary. It simply created back-and-forth coupling between the "Reservation_Manager" and the "Reservation_Creator". I do not think this a particularly efficient refactoring. I'm not sure what would be a better solution to the overstuffed ReservationManager class. While that class is technically responsible for more information processing and accessing than the rules of object-oriented design might allow for, I can't come up with a more efficient system of object organization. I would welcome suggestions on what I could have done better.
+
+As a result of this activity, I noticed that my tests were not optimally testing my code. I made some small refactors to a few of them to improve them.
